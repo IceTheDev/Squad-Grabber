@@ -3,7 +3,7 @@ This script gives the ability to open/close all doors from the outside of Rednec
 
 # Features
 - Ability to open each compartment door from the outside of the vehicle.
-- Ability to grab items from the squad truck and place those items on the ground anywhere or just place it back inside the squad truck.
+- ~~Ability to grab items from the squad truck and place those items on the ground anywhere or just place it back inside the squad truck.~~
 
 # Contributions
 - `IceTheDev`
