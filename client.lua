@@ -1,7 +1,4 @@
 local lastTruck = 0
-local lastVeh = 0
-local lastTruckCoords = vector3(0,0,0)
-local r,g,b = 255,0,0
 
 local labels = {
     {"REDNECK_HELP1", "~b~Instructional Buttons:~n~~w~Press ~INPUT_CONTEXT~ to ~g~open~w~ compartment doors.~n~Press ~INPUT_DETONATE~ to lift pioneers."},
@@ -9,7 +6,6 @@ local labels = {
     {"REDNECK_HELP3", "~b~Instructional Buttons:~n~~w~Press ~INPUT_CONTEXT~ to ~g~open~w~ compartment doors.~n~Press ~INPUT_DETONATE~ to drop pioneers."},
     {"REDNECK_HELP4", "~b~Instructional Buttons:~n~~w~Press ~INPUT_CONTEXT~ to ~r~close~w~ compartment doors.~n~Press ~INPUT_DETONATE~ to drop pioneers."}
 }
-
 
 local vehs = {}
 for k,v in ipairs(config.squad_vehicle) do
@@ -29,10 +25,6 @@ Citizen.CreateThread(function()
 
         if veh and has_value(vehs, GetEntityModel(veh)) then
            lastTruck = veh
-           
-           lastTruckCoords = GetEntityCoords(lastTruck)
-        else
-            lastVeh = veh
         end
 
         if IsPedInAnyVehicle(ped,true) == false then
@@ -45,25 +37,23 @@ Citizen.CreateThread(function()
                     BeginTextCommandDisplayHelp(labels[2][1]) -- close compartment
                     EndTextCommandDisplayHelp(0, 0, 1, -1)
                 end
-                if GetDistanceBetweenCoords(markerCoords,pos) < 10 then
-                    if IsVehicleDoorFullyOpen(lastTruck, 5) then
-                        if IsControlJustPressed(0, 51) then 
-                            SetVehicleDoorShut(lastTruck, 5, false)
-                        end
-                    else
-                        if IsControlJustPressed(0, 51) then
-                            SetVehicleDoorOpen(lastTruck, 5, false, false)
-                        end
+                if IsVehicleDoorFullyOpen(lastTruck, 5) then
+                    if IsControlJustPressed(0, 51) then 
+                        SetVehicleDoorShut(lastTruck, 5, false)
                     end
+                else
+                    if IsControlJustPressed(0, 51) then
+                        SetVehicleDoorOpen(lastTruck, 5, false, false)
+                    end
+                end
 
-                    if IsVehicleDoorFullyOpen(lastTruck, 4) then
-                        if IsControlJustPressed(0, 47) then
-                            SetVehicleDoorShut(lastTruck, 4, false)
-                        end
-                    else
-                        if IsControlJustPressed(0, 47) then
-                            SetVehicleDoorOpen(lastTruck, 4, false, false)
-                        end
+                if IsVehicleDoorFullyOpen(lastTruck, 4) then
+                    if IsControlJustPressed(0, 47) then
+                        SetVehicleDoorShut(lastTruck, 4, false)
+                    end
+                else
+                    if IsControlJustPressed(0, 47) then
+                        SetVehicleDoorOpen(lastTruck, 4, false, false)
                     end
                 end
             end         
